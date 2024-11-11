@@ -1,4 +1,4 @@
-from schemas import AddModelRequest, AddModelResponse
+from schemas import Id, AddModelRequest, AddModelResponse, PredictRequest, PredictResponse
 from models import ModelNameUnion, model_names, validate_params, create_trained_model
 from store import store_model, get_model, del_model
 
@@ -17,7 +17,7 @@ app = FastAPI()
 async def add_model(
     model: ModelNameUnion = Query(description="the name of the model to add"),
     body: AddModelRequest = Body()
-) -> Annotated[AddModelResponse, "info about the added model"]:
+) -> AddModelResponse:
     """
       Trains a `model` with `parameters` on the provided `dataset` and saves it. Returns an id assigned to the model.
     """
@@ -38,8 +38,22 @@ async def list_models() -> Annotated[List[str], Field(description="the names of 
     return model_names
 
 
+@app.post("/predict", summary="predict target vals")
+async def predict(
+    id: Id = Query(),
+    data: PredictRequest = Body()
+) -> PredictResponse:
+    """
+      Predict the target values for the given dataset using the model with `id`.
+    """
+    model = get_model(id)
+    y = model.infer(data.X)
+
+    return PredictResponse(y=y)
+
+
 @app.get("/retrain_model", summary="retrain a model")
-async def retrain_model(id: str = Query(description="id of the model", example="68fb4ce6-24a8-4615-8830-61ccada86eba")) -> Literal["ok"]:
+async def retrain_model(id: Id) -> Literal["ok"]:
     """
       Retrain the model with `id`
     """
@@ -50,7 +64,7 @@ async def retrain_model(id: str = Query(description="id of the model", example="
 
 
 @app.get("/remove_model", summary="retrain a model")
-async def remove_model(id: str = Query(description="id of the model", example="68fb4ce6-24a8-4615-8830-61ccada86eba")) -> Literal["ok"]:
+async def remove_model(id: Id) -> Literal["ok"]:
     """
       Remove the model with `id`
     """
@@ -60,7 +74,7 @@ async def remove_model(id: str = Query(description="id of the model", example="6
 
 
 @app.get("/alive", summary="Aliveness check")
-async def alive() -> Annotated[Literal["yes", "no"], Field(description="whether the service is alive")]:
+async def alive() -> Annotated[Literal["yes"], Field(description="whether the service is alive")]:
     """
       Returns "yes" if the service is alive and is ready to serve requests.
     """
