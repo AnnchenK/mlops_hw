@@ -1,6 +1,6 @@
 from schemas import AddModelRequest, AddModelResponse
 from models import ModelNameUnion, model_names, validate_params, create_trained_model
-from store import store_model
+from store import store_model, get_model, del_model
 
 
 from fastapi import FastAPI, Query, Body, HTTPException
@@ -36,6 +36,27 @@ async def list_models() -> Annotated[List[str], Field(description="the names of 
       Returns the names of all the models that are supported.
     """
     return model_names
+
+
+@app.get("/retrain_model", summary="retrain a model")
+async def retrain_model(id: str = Query(description="id of the model", example="68fb4ce6-24a8-4615-8830-61ccada86eba")) -> Literal["ok"]:
+    """
+      Retrain the model with `id`
+    """
+    model = get_model(id)
+    model.refit()
+
+    return "ok"
+
+
+@app.get("/remove_model", summary="retrain a model")
+async def remove_model(id: str = Query(description="id of the model", example="68fb4ce6-24a8-4615-8830-61ccada86eba")) -> Literal["ok"]:
+    """
+      Remove the model with `id`
+    """
+    del_model(id)
+
+    return "ok"
 
 
 @app.get("/alive", summary="Aliveness check")

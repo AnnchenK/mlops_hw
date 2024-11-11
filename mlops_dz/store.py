@@ -22,12 +22,12 @@ def store_model(model: Model) -> str:
     return id
 
 
-def del_model(id: str):
+def del_model(id: str) -> None:
     """
       removes the model with `id` from the memory
     """
-    if id in _storage:
-        raise HTTPException(status_code=404, detail=f"id {id} is already taken")
+    if id not in _storage:
+        raise HTTPException(status_code=404, detail=f"id {id} does not exist")
     del _storage[id]
     _logger.info(f"removed model with id {id}")
 
