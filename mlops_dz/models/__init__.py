@@ -10,16 +10,17 @@ from typing import List, Dict, Union, Literal
 _models: List[type[Model]] = Model.__subclasses__()
 _name_to_params_map: Dict[str, type[ModelParams]] = {}
 _name_to_model_map: Dict[str, type[Model]] = {}
-_model_names: List[str] = []
+
+model_names: List[str] = []
 
 
 for model in _models:
     _name_to_params_map[model.model_name()] = model.model_params()
     _name_to_model_map[model.model_name()] = model
-_model_names = list(_name_to_params_map.keys())
+model_names = list(_name_to_params_map.keys())
 
 
-ModelNameUnion = Literal[*_model_names]
+ModelNameUnion = Literal[*model_names]
 ModelParamsUnion = Union[*_name_to_params_map.values()]
 
 

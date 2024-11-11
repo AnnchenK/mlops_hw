@@ -1,7 +1,7 @@
 from models import ModelParamsUnion
 
 from pydantic import BaseModel, Field, field_validator
-from typing import List, Literal
+from typing import List
 
 
 class Dataset(BaseModel):
@@ -63,8 +63,3 @@ class AddModelResponse(BaseModel):
         description="the id of the model", 
         examples=["68fb4ce6-24a8-4615-8830-61ccada86eba"]
     )
-
-"""
-  response of the `alive` handle
-"""
-AliveResponse = Literal["yes", "no"]
