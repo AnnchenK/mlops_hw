@@ -1,27 +1,20 @@
+from models import ModelParamsUnion
+
 from pydantic import BaseModel, Field, field_validator
-from typing import Annotated, List, Union, Literal
-from fastapi import Path
+from typing import List, Literal
 
-
-Model = Annotated[Literal["linear_regression", "neural_network"], Path(description="type of the model")]
-
-class LinearRegressionParameters(BaseModel):
-    """
-      Parameters for linear regression model
-    """
-    train_constant: bool
-    alpha: float
-
-class NeuralNetworkParameters(BaseModel):
-    """
-      Parameters for neural network model
-    """
-    layers: int
-    activation: str
 
 class Dataset(BaseModel):
-    X: List[List[float]]
-    y: List[float]
+    """
+      dataset for the model to train on
+    """
+    X: List[List[float]] = Field(
+        description="features of the dataset",
+    )
+    y: List[float] = Field(
+        description="target values of the dataset",
+    )
+
 
     @field_validator('X')
     def check_x_consistency(cls, v, values):
@@ -34,7 +27,7 @@ class Dataset(BaseModel):
 
     @field_validator('y')
     def check_y_length(cls, v, values):
-        if 'X' in values and len(v) != len(values['X']):
+        if len(v) != len(values.data['X']):
             raise ValueError("Length of y must match number of rows in X")
         return v
 
@@ -49,18 +42,29 @@ class Dataset(BaseModel):
         }
     }
 
+
 class AddModelRequest(BaseModel):
-    parameters: Union[LinearRegressionParameters, NeuralNetworkParameters] = Field(
+    """
+      body of the `add_model` handle request
+    """
+    parameters: ModelParamsUnion = Field(
         description="the parameters of the model",
     )
     dataset: Dataset = Field(
         description="the dataset to train the model on"
     )
 
+
 class AddModelResponse(BaseModel):
-    model_id: str = Field(
+    """
+      response of the `add_model` handle
+    """
+    id: str = Field(
         description="the id of the model", 
         examples=["68fb4ce6-24a8-4615-8830-61ccada86eba"]
     )
 
-AliveResponse = Annotated[Literal["yes", "no"], "whether the service is alive"]
+"""
+  response of the `alive` handle
+"""
+AliveResponse = Literal["yes", "no"]
