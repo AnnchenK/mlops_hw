@@ -31,7 +31,7 @@ async def add_model(
 
 
 @app.get("/list_models", summary="list all models")
-async def list_models() -> Annotated[List[str], Field(description="the names of the models", examples=[model_names])]:
+async def my_list_models() -> Annotated[List[str], Field(description="the names of the models", examples=[model_names])]:
     """
       Returns the names of all the models that are supported.
     """
