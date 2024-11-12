@@ -40,7 +40,7 @@ async def list_models() -> Annotated[List[str], Field(description="the names of 
 
 @app.post("/predict", summary="predict target vals")
 async def predict(
-    id: Id = Query(),
+    id: Id = Query(description="id of the model", example="68fb4ce6-24a8-4615-8830-61ccada86eba"),
     data: PredictRequest = Body()
 ) -> PredictResponse:
     """
@@ -53,7 +53,7 @@ async def predict(
 
 
 @app.get("/retrain_model", summary="retrain a model")
-async def retrain_model(id: Id) -> Literal["ok"]:
+async def retrain_model(id: Id = Query(description="id of the model", example="68fb4ce6-24a8-4615-8830-61ccada86eba")) -> Literal["ok"]:
     """
       Retrain the model with `id`
     """
@@ -64,7 +64,7 @@ async def retrain_model(id: Id) -> Literal["ok"]:
 
 
 @app.get("/remove_model", summary="retrain a model")
-async def remove_model(id: Id) -> Literal["ok"]:
+async def remove_model(id: Id = Query(description="id of the model", example="68fb4ce6-24a8-4615-8830-61ccada86eba")) -> Literal["ok"]:
     """
       Remove the model with `id`
     """

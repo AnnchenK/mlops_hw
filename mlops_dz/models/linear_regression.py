@@ -3,14 +3,19 @@ from .base_model import ModelParams, Model
 from sklearn.linear_model import LinearRegression as SklearnLinearRegression
 
 from typing import List
+from pydantic import Field
 
 
 class LinearRegressionParams(ModelParams):
     """
       Parameters for linear regression model
     """
-    train_constant: bool = True
-    positive: bool = False
+    train_constant: bool = Field(
+        description="wether to train a constant"
+    )
+    positive: bool = Field(
+        description="wether to keep coefs positive"
+    )
 
 
 class LinearRegression(Model):

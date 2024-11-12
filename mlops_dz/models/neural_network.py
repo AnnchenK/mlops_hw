@@ -1,13 +1,20 @@
 from .base_model import ModelParams, Model
 
+from sklearn.neural_network import MLPRegressor
+
 from typing import Literal, List
+from pydantic import Field
 
 class NeuralNetworkParams(ModelParams):
     """
       Parameters for neural network model
     """
-    layers: int
-    activation: Literal['relu'] | Literal['sigmoid']
+    layers: int = Field(
+        description="number of hidden layers"
+    )
+    activation: Literal["identity", "logistic", "tanh", "relu"] = Field(
+        description="which activation function to use"
+    )
 
 
 class NeuralNetwork(Model):
@@ -32,20 +39,26 @@ class NeuralNetwork(Model):
         """
           initializes the model `self` with provided `params`
         """
+        super().__init__(params)
+        self._model = MLPRegressor(hidden_layer_sizes=(self._params.layers,) * self._params.layers,
+                                  activation=self._params.activation)
 
     def _do_fit(self, X: List[List[float]], y: List[float]) -> None:
         """
           trains `self` on a dataset `X` with target values `y`
         """
+        self._model.fit(X, y)
 
     def _reset(self) -> None:
         """
           resets the model
         """
+        self._model = MLPRegressor(hidden_layer_sizes=(self._params.layers,) * self._params.layers,
+                                  activation=self._params.activation)
 
     def infer(self, X: List[List[float]]) -> List[float]:
         """
           predicts target values for `X` with `self`
         """
-        return []
+        return self._model.predict(X).tolist()
 
