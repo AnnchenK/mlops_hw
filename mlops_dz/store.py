@@ -22,6 +22,16 @@ def store_model(model: Model) -> str:
     return id
 
 
+def list_all_models() -> Dict[str, str]:
+    """
+      returns all the added models in a form "id": "model name"
+    """
+    res = {}
+    for id, model in _storage.items():
+        res[id]=model.model_name()
+    return res
+
+
 def del_model(id: str) -> None:
     """
       removes the model with `id` from the memory
