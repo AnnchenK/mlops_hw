@@ -47,6 +47,7 @@ class NeuralNetwork(Model):
         """
           trains `self` on a dataset `X` with target values `y`
         """
+        super()._do_fit(X, y)
         self._model.fit(X, y)
 
     def _reset(self) -> None:
@@ -60,5 +61,6 @@ class NeuralNetwork(Model):
         """
           predicts target values for `X` with `self`
         """
+        super().infer(X)
         return self._model.predict(X).tolist()
 

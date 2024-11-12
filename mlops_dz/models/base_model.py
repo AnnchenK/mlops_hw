@@ -1,6 +1,10 @@
 from typing import List
 from fastapi import HTTPException
 from pydantic import BaseModel
+import logging
+
+
+_logger = logging.getLogger("uvicorn")
 
 
 class ModelParams(BaseModel):
@@ -55,6 +59,7 @@ class Model:
         """
           actually trains `self`
         """
+        _logger.info(f"training a model on a dataset with {len(X)} rows")
 
     def _reset(self) -> None:
         """
@@ -65,5 +70,6 @@ class Model:
         """
           predicts target values for `X` with `self`
         """
+        _logger.info(f"infering from a dataset with {len(X)} rows")
         return []
 
