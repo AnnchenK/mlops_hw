@@ -10,3 +10,5 @@ until curl -s -o /dev/null -w "%{http_code}" "http://$ADDRESS:$PORT/alive" | gre
 done
 
 poetry run streamlit run dashboard/dashboard.py >/dev/null 2>&1
+
+dvc init --no-scm
