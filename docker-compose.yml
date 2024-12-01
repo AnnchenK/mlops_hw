@@ -1,0 +1,15 @@
+version: "3"
+services:
+  main_service:
+    container_name: main_service
+    build: .
+    image: main_service
+    restart: always
+    volumes:
+      - ./pyproject.toml:/pyproject.toml
+      - ./mlops_dz:/mlops_dz/
+      - ./tests:/tests/
+      - ./dashboard:/dashboard/
+    ports:
+      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:8501:8501"
