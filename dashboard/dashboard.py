@@ -45,9 +45,9 @@ def _remove_model(model_id):
 def main():
     st.title("ML Model Management Dashboard")
 
-    if 'models' not in st.session_state:
+    if "models" not in st.session_state:
         st.session_state.models = _get_model_list()
-    if 'message' not in st.session_state:
+    if "message" not in st.session_state:
         st.session_state.message = ""
 
     models = st.session_state.models
@@ -71,7 +71,7 @@ def main():
 
     status_container = st.container()
     with status_container:
-        if  st.session_state.message:
+        if st.session_state.message:
             st.info(st.session_state.message)
 
 
