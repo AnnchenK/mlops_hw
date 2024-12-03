@@ -9,37 +9,38 @@ _logger = logging.getLogger("uvicorn")
 
 class ModelParams(BaseModel):
     """
-      base class for model parameters
+    base class for model parameters
     """
 
 
 class Model:
     """
-      base class for models
+    base class for models
     """
+
     @staticmethod
     def model_name() -> str:
         """
-          returns the name of the model
+        returns the name of the model
         """
         return "base_model"
 
     @staticmethod
     def model_params() -> type[ModelParams]:
         """
-          returns the class for model params
+        returns the class for model params
         """
         return ModelParams
 
     def __init__(self, params: ModelParams) -> None:
         """
-          initializes the model `self` with provided `params`
+        initializes the model `self` with provided `params`
         """
         self._params = params
 
     def fit(self, X: List[List[float]], y: List[float]) -> None:
         """
-          trains `self` on a dataset `X` with target values `y` and saves the dataset for future refiting
+        trains `self` on a dataset `X` with target values `y` and saves the dataset for future refiting
         """
         self._X = X
         self._y = y
@@ -47,7 +48,7 @@ class Model:
 
     def refit(self) -> None:
         """
-          retrain `self`
+        retrain `self`
         """
         self._reset()
 
@@ -57,19 +58,18 @@ class Model:
 
     def _do_fit(self, X: List[List[float]], y: List[float]) -> None:
         """
-          actually trains `self`
+        actually trains `self`
         """
         _logger.info(f"training a model on a dataset with {len(X)} rows")
 
     def _reset(self) -> None:
         """
-          resets the model
+        resets the model
         """
 
     def infer(self, X: List[List[float]]) -> List[float]:
         """
-          predicts target values for `X` with `self`
+        predicts target values for `X` with `self`
         """
         _logger.info(f"infering from a dataset with {len(X)} rows")
         return []
-

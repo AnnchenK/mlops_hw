@@ -1,0 +1,1 @@
+mlflow ui --default-artifact-root s3://dvc-minio/ --host 0.0.0.0 --port 5000
