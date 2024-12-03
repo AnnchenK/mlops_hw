@@ -4,6 +4,7 @@
 
 ## Источники вдохновения
 Для настройки minio вдохновлялась следующей статьей https://medium.com/data-engineering-indonesia/how-to-upload-files-from-flask-to-minio-on-docker-14aade73596f
+Для настройки DVC смотрела статью https://medium.com/analytics-vidhya/docker-volumes-with-dvc-for-versioning-data-and-models-for-ml-projects-4885935db3ec, https://rachidbenouini.medium.com/data-version-control-from-zero-to-one-fcea7a1c48b3 и семинар
 
 # HW 1
 
