@@ -26,7 +26,7 @@ async def add_model(
         raise HTTPException(status_code=422, detail="model was incorrectly configured")
 
     model = create_trained_model(model, body.parameters, body.dataset.X, body.dataset.y)
-    DVC().data_commit(body.dataset.X, body.dataset.y)
+    DVC(_logger).data_commit(body.dataset.X, body.dataset.y, path='./data', filename='train_data.json')
 
     id = store_model(model)
     return AddModelResponse(id=id)

@@ -11,7 +11,7 @@ done
 
 dvc init --no-scm
 dvc remote add -d myremote s3://$MINIO_BUCKET
-dvc remote modify myremote endpointurl http://minio:9000/
+dvc remote modify myremote endpointurl http://$MINIO_ENDPOINT
 dvc remote modify --local myremote access_key_id $MINIO_ROOT_USER
 dvc remote modify --local myremote secret_access_key $MINIO_ROOT_PASSWORD
 
