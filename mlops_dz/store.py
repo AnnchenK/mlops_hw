@@ -12,7 +12,7 @@ _storage: Dict[str, Model] = {}
 
 def store_model(model: Model) -> str:
     """
-      stores a `model` in volatile memory and returns the assigned id
+    stores a `model` in volatile memory and returns the assigned id
     """
     id = str(uuid4())
     if id in _storage:
@@ -24,17 +24,17 @@ def store_model(model: Model) -> str:
 
 def list_all_models() -> Dict[str, str]:
     """
-      returns all the added models in a form "id": "model name"
+    returns all the added models in a form "id": "model name"
     """
     res = {}
     for id, model in _storage.items():
-        res[id]=model.model_name()
+        res[id] = model.model_name()
     return res
 
 
 def del_model(id: str) -> None:
     """
-      removes the model with `id` from the memory
+    removes the model with `id` from the memory
     """
     if id not in _storage:
         raise HTTPException(status_code=404, detail=f"id {id} does not exist")
@@ -44,7 +44,7 @@ def del_model(id: str) -> None:
 
 def get_model(id: str) -> Model:
     """
-      returns the model with `id`
+    returns the model with `id`
     """
     if id not in _storage:
         raise HTTPException(status_code=404, detail=f"id {id} does not exist")

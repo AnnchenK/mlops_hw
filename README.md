@@ -1,5 +1,21 @@
 # Учебный сервис для работы с ml моделями
 
+# HW 2
+## Как запустить?
+Собираем образ `docker compose build` (2-3 минуты)
+Запускаем контейнеры `docker compose up` (2-3 минуты)
+Открываем веб сервис http://127.0.0.1:8000 и взаимодействуем как обычно
+Дашборд запустится на порту 8501, к контейнеру с s3 есть доступ только у контейнеров из docker-compose (для безопасности)
+
+Для удаления вольюма после остановки использовать `docker compose down -v`
+Зайти внутрь контейнера с minio и проверить данные: `docker exec -it minio_s3 bash`, смотреть папку `ls data`
+
+## Источники вдохновения
+Для настройки minio вдохновлялась следующей статьей https://medium.com/data-engineering-indonesia/how-to-upload-files-from-flask-to-minio-on-docker-14aade73596f
+Для настройки DVC смотрела статью https://medium.com/analytics-vidhya/docker-volumes-with-dvc-for-versioning-data-and-models-for-ml-projects-4885935db3ec, https://rachidbenouini.medium.com/data-version-control-from-zero-to-one-fcea7a1c48b3 и семинар
+
+# HW 1
+
 ## Как запустить?
 Запустить можно при помощи скрипта `run.sh`. Скрипт запустит сервис на порту 8000 на всех интерфейсах. Также запустится дашборд на порту 8501 (и, вероятно, сам откроется в браузере).
 
