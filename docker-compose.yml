@@ -10,7 +10,6 @@ services:
     env_file:
       - .env
     volumes:
-      - ./pyproject.toml:/pyproject.toml
       - ./mlops_dz:/mlops_dz/
       - ./tests:/tests/
       - ./dashboard:/dashboard/
